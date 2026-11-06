@@ -2,6 +2,11 @@
 import streamlit as st
 from datetime import date
 
+# =====================================================
+# UGANDA GOVERNANCE GUIDE
+# Version 2.0
+# =====================================================
+
 st.set_page_config(
     page_title="Uganda Governance Guide",
     page_icon="UG",
@@ -9,80 +14,171 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# ---------------- DESIGN ----------------
+# =====================================================
+# DESIGN SYSTEM
+# =====================================================
 
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap');
+
+:root {
+    --forest: #102F2A;
+    --green: #176B50;
+    --green-light: #E8F2EC;
+    --gold: #D5AA54;
+    --ivory: #F7F5EF;
+    --white: #FFFFFF;
+    --text: #243B35;
+    --muted: #75847C;
+    --border: #E6E2D7;
+}
 
 html, body, [class*="css"] {
     font-family: 'DM Sans', sans-serif;
 }
 
 .stApp {
-    background: #f4f7f6;
+    background: var(--ivory);
+    color: var(--text);
 }
 
 [data-testid="stSidebar"] {
-    background: #102b35;
+    background: var(--forest);
+    border-right: 1px solid #284A40;
 }
 
 [data-testid="stSidebar"] * {
-    color: white !important;
+    color: #F7F5EF !important;
+}
+
+[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] p {
+    color: #D5E2DA !important;
 }
 
 h1, h2, h3 {
     font-family: 'Manrope', sans-serif;
+    color: var(--forest);
+    font-weight: 800;
 }
 
 .hero {
-    background: linear-gradient(120deg, #102b35, #176b50);
+    background: linear-gradient(120deg, #102F2A 0%, #176B50 100%);
+    border-left: 5px solid var(--gold);
     padding: 38px;
-    border-radius: 16px;
-    color: white;
+    border-radius: 17px;
     margin-bottom: 25px;
+    box-shadow: 0 8px 25px rgba(16,47,42,.12);
 }
 
 .hero h1 {
     color: white;
-    font-size: 35px;
+    font-size: 36px;
+    margin-bottom: 10px;
 }
 
 .hero p {
-    color: #dceee6;
+    color: #E2EEE8;
+    font-size: 16px;
 }
 
 .metric {
     background: white;
-    border: 1px solid #e1e9e5;
-    border-radius: 13px;
-    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px;
+    min-height: 120px;
+    box-shadow: 0 4px 14px rgba(16,47,42,.04);
 }
 
 .metric h2 {
-    color: #176b50;
+    color: var(--green);
+    margin: 0;
+    font-size: 29px;
+}
+
+.metric p {
+    color: var(--muted);
+    margin-top: 8px;
 }
 
 .panel {
     background: white;
-    padding: 20px;
-    border-radius: 13px;
-    border: 1px solid #e1e9e5;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px;
     margin-bottom: 12px;
 }
 
-a {
-    color: #176b50 !important;
+.panel h3 {
+    color: var(--green);
 }
 
-footer {
-    visibility: hidden;
+.stButton > button {
+    background: var(--green);
+    color: white !important;
+    border: 1px solid var(--green);
+    border-radius: 9px;
+    font-weight: 600;
 }
+
+.stButton > button:hover {
+    background: var(--forest);
+    border-color: var(--gold);
+    color: white !important;
+}
+
+.stLinkButton > a {
+    background: var(--green);
+    color: white !important;
+    border: 1px solid var(--green);
+    border-radius: 9px;
+}
+
+[data-testid="stMetricValue"] {
+    color: var(--green);
+}
+
+[data-testid="stExpander"] {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+}
+
+[data-testid="stTextInput"] input,
+[data-testid="stSelectbox"] div[data-baseweb="select"] {
+    border-radius: 9px;
+}
+
+a {
+    color: var(--green) !important;
+}
+
+hr {
+    border-color: var(--border);
+}
+
+.footer {
+    text-align: center;
+    padding: 20px;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.gold-line {
+    height: 3px;
+    background: var(--gold);
+    border-radius: 5px;
+    margin: 15px 0;
+}
+
 </style>
 """, unsafe_allow_html=True)
 
 
-# ---------------- DATA ----------------
+# =====================================================
+# OFFICIAL SOURCES
+# =====================================================
 
 SOURCES = {
     "State House": "https://statehouse.go.ug/",
@@ -98,6 +194,11 @@ SOURCES = {
     "Public Service Commission": "https://psc.go.ug/",
     "PPDA": "https://www.ppda.go.ug/",
 }
+
+
+# =====================================================
+# INSTITUTION DIRECTORY
+# =====================================================
 
 INSTITUTIONS = [
     {
@@ -115,13 +216,13 @@ INSTITUTIONS = [
     {
         "name": "Office of the Prime Minister",
         "category": "Executive",
-        "description": "Coordinates government business and relevant national programmes.",
+        "description": "Coordinates government business and national programmes.",
         "website": "Office of the Prime Minister"
     },
     {
         "name": "Parliament of Uganda",
         "category": "Legislature",
-        "description": "Makes laws, represents citizens and provides government oversight.",
+        "description": "Makes laws, represents citizens and oversees government.",
         "website": "Parliament"
     },
     {
@@ -167,12 +268,17 @@ INSTITUTIONS = [
         "website": "Public Service Commission"
     },
     {
-        "name": "PPDA",
+        "name": "Public Procurement and Disposal of Public Assets Authority",
         "category": "Procurement",
         "description": "Regulates public procurement and disposal of public assets.",
         "website": "PPDA"
-    },
+    }
 ]
+
+
+# =====================================================
+# ADMINISTRATIVE STRUCTURE
+# =====================================================
 
 LEVELS = [
     ("National", "Central Government"),
@@ -183,25 +289,58 @@ LEVELS = [
     ("Sub-county", "Sub-county Administration"),
     ("Division", "Urban Division"),
     ("Parish", "Parish or Ward"),
-    ("Village", "Village or Cell"),
+    ("Village", "Village or Cell")
 ]
+
+
+# =====================================================
+# CONSTITUTIONAL TOPICS
+# =====================================================
 
 CONSTITUTION = [
-    ("Sovereignty", "The people are the source of public authority."),
-    ("Constitutional supremacy", "The Constitution is the supreme law of Uganda."),
-    ("Separation of powers", "Government powers are distributed among the three branches."),
-    ("Human rights", "The Constitution protects fundamental rights and freedoms."),
-    ("Decentralisation", "The Constitution provides for decentralised local government."),
-    ("Accountability", "Public institutions and officers are subject to legal accountability."),
+    (
+        "Sovereignty of the people",
+        "The people are the source of public authority."
+    ),
+    (
+        "Constitutional supremacy",
+        "The Constitution is the supreme law of Uganda."
+    ),
+    (
+        "Separation of powers",
+        "Government authority is distributed among the Executive, Legislature and Judiciary."
+    ),
+    (
+        "Human rights",
+        "The Constitution protects fundamental rights and freedoms."
+    ),
+    (
+        "Decentralisation",
+        "The Constitution provides for decentralised local government."
+    ),
+    (
+        "Public accountability",
+        "Public institutions and officers are subject to legal accountability."
+    )
 ]
 
 
-# ---------------- SIDEBAR ----------------
+# =====================================================
+# SIDEBAR NAVIGATION
+# =====================================================
 
 with st.sidebar:
-    st.markdown("# UGANDA")
+
+    st.markdown(
+        "<h1 style='color:#D5AA54;'>UGANDA</h1>",
+        unsafe_allow_html=True
+    )
+
     st.markdown("### GOVERNANCE GUIDE")
-    st.caption("Public information portal")
+    st.caption("PUBLIC INFORMATION PORTAL")
+
+    st.markdown("<div class='gold-line'></div>",
+                unsafe_allow_html=True)
 
     page = st.radio(
         "NAVIGATION",
@@ -220,11 +359,16 @@ with st.sidebar:
         ]
     )
 
-    st.divider()
-    st.caption("Independent educational reference")
+    st.markdown("<div class='gold-line'></div>",
+                unsafe_allow_html=True)
+
+    st.caption("Independent civic information portal")
+    st.caption("Uganda | Version 2.0")
 
 
-# ---------------- DASHBOARD ----------------
+# =====================================================
+# DASHBOARD
+# =====================================================
 
 if page == "Dashboard":
 
@@ -232,7 +376,7 @@ if page == "Dashboard":
     <div class="hero">
         <h1>Uganda Governance Guide</h1>
         <p>
-        Explore Uganda's government, public institutions,
+        Understand Uganda's government, public institutions,
         administrative structures and constitutional framework.
         </p>
     </div>
@@ -240,57 +384,83 @@ if page == "Dashboard":
 
     a, b, c = st.columns(3)
 
-    for col, heading, value in [
-        (a, "Government branches", "3"),
-        (b, "Information directory", "Public"),
-        (c, "Administrative levels", "9")
-    ]:
-        with col:
-            st.markdown(
-                f"""
-                <div class="metric">
-                    <h2>{value}</h2>
-                    <p>{heading}</p>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
-
-    st.subheader("The three branches")
-
-    cols = st.columns(3)
-
-    branches = [
-        ("Executive", "Implements laws and directs government policy."),
-        ("Legislature", "Makes laws and represents citizens."),
-        ("Judiciary", "Interprets laws and resolves disputes.")
+    metrics = [
+        (a, "3", "Branches of Government"),
+        (b, "9", "Administrative Levels"),
+        (c, "Public", "Information Directory")
     ]
 
-    for col, (name, description) in zip(cols, branches):
+    for col, value, label in metrics:
         with col:
-            st.markdown(
-                f"""
-                <div class="panel">
-                    <h3>{name}</h3>
-                    <p>{description}</p>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
+            st.markdown(f"""
+            <div class="metric">
+                <h2>{value}</h2>
+                <p>{label}</p>
+            </div>
+            """, unsafe_allow_html=True)
+
+    st.markdown("## Government at a glance")
+
+    columns = st.columns(3)
+
+    branches = [
+        (
+            "Executive",
+            "Implements laws, directs government policy and administers public services."
+        ),
+        (
+            "Legislature",
+            "Makes laws, represents citizens and scrutinises government."
+        ),
+        (
+            "Judiciary",
+            "Interprets laws and resolves disputes."
+        )
+    ]
+
+    for col, (title, description) in zip(columns, branches):
+        with col:
+            st.markdown(f"""
+            <div class="panel">
+                <h3>{title}</h3>
+                <p>{description}</p>
+            </div>
+            """, unsafe_allow_html=True)
+
+    st.markdown("## Explore the guide")
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.markdown("""
+        <div class="panel">
+            <h3>Public Institutions</h3>
+            <p>Explore government institutions and their responsibilities.</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col2:
+        st.markdown("""
+        <div class="panel">
+            <h3>Administrative Registry</h3>
+            <p>Explore Uganda's administrative levels and local government.</p>
+        </div>
+        """, unsafe_allow_html=True)
 
     st.info(
-        "This portal is an independent educational guide. "
-        "Verify changing information through official sources."
+        "Always verify current government information "
+        "through the relevant official institution."
     )
 
 
-# ---------------- GOVERNMENT STRUCTURE ----------------
+# =====================================================
+# GOVERNMENT STRUCTURE
+# =====================================================
 
 elif page == "Government Structure":
 
     st.title("Government Structure")
-
-    st.write("Uganda's national government operates through three principal branches.")
+    st.caption("The three principal branches of government.")
 
     sections = {
         "Executive": [
@@ -315,160 +485,196 @@ elif page == "Government Structure":
     }
 
     for name, items in sections.items():
+
         with st.expander(name, expanded=True):
+
             for item in items:
                 st.write(f"- {item}")
 
 
-# ---------------- INSTITUTIONS ----------------
+# =====================================================
+# INSTITUTIONS DIRECTORY
+# =====================================================
 
 elif page == "Institutions Directory":
 
-    st.title("Government Institutions")
+    st.title("Institutions Directory")
+    st.caption("Search public institutions and their responsibilities.")
 
     query = st.text_input("Search institutions")
 
+    categories = ["All"] + sorted(
+        set(item["category"] for item in INSTITUTIONS)
+    )
+
     category = st.selectbox(
         "Institution category",
-        ["All"] + sorted(set(x["category"] for x in INSTITUTIONS))
+        categories
     )
 
     results = [
-        x for x in INSTITUTIONS
+        item for item in INSTITUTIONS
         if query.lower() in (
-            x["name"] + x["description"] + x["category"]
+            item["name"] + item["description"] + item["category"]
         ).lower()
-        and (category == "All" or x["category"] == category)
+        and (
+            category == "All"
+            or item["category"] == category
+        )
     ]
 
     st.caption(f"{len(results)} institutions found")
 
     for item in results:
+
         with st.container(border=True):
+
             st.subheader(item["name"])
             st.caption(item["category"])
+
             st.write(item["description"])
+
             st.link_button(
-                "Official website",
+                "Visit official website",
                 SOURCES[item["website"]]
             )
 
 
-# ---------------- MINISTRIES ----------------
+# =====================================================
+# MINISTRIES
+# =====================================================
 
 elif page == "Ministries":
 
     st.title("Government Ministries")
 
-    st.write(
-        "Use official government sources to verify the current "
-        "ministries, ministerial portfolios and institutional responsibilities."
+    st.write("""
+    This section is intended to provide a directory of
+    Uganda's government ministries, ministers and portfolios.
+    """)
+
+    st.info(
+        "Current ministry names, portfolios and office holders "
+        "must be verified against official government records "
+        "before being added to the directory."
     )
 
     st.link_button(
-        "Visit State House",
+        "State House Uganda",
         SOURCES["State House"]
     )
 
     st.link_button(
-        "Visit Office of the Prime Minister",
+        "Office of the Prime Minister",
         SOURCES["Office of the Prime Minister"]
     )
 
-    st.warning(
-        "The ministry directory and current office holders require "
-        "verification against current official government records."
-    )
 
-
-# ---------------- LOCAL GOVERNMENT ----------------
+# =====================================================
+# LOCAL GOVERNMENT
+# =====================================================
 
 elif page == "Local Government":
 
-    st.title("Local Government Structure")
-
-    st.write(
-        "Explore the general decentralised administrative structure."
-    )
+    st.title("Local Government")
+    st.caption("Uganda's decentralised administrative framework.")
 
     for level, description in LEVELS:
+
         with st.expander(level):
+
             st.write(description)
+
+    st.markdown("## Local government responsibilities")
+
+    st.markdown("""
+    - Local planning and budgeting
+    - Delivery of public services
+    - Community participation
+    - Local infrastructure
+    - Public health administration
+    - Implementation of national policies
+    """)
 
     st.link_button(
         "Ministry of Local Government",
         SOURCES["Local Government"]
     )
 
-    st.link_button(
-        "Uganda Bureau of Statistics",
-        SOURCES["UBOS"]
-    )
 
-
-# ---------------- DISTRICT REGISTRY ----------------
+# =====================================================
+# DISTRICT REGISTRY
+# =====================================================
 
 elif page == "District Registry":
 
     st.title("Uganda Administrative Registry")
 
-    st.write(
-        "A dedicated registry for districts, cities, municipalities "
-        "and lower administrative units."
+    st.write("""
+    Central directory for Uganda's districts, cities,
+    municipalities, town councils and lower administrative units.
+    """)
+
+    search = st.text_input("Search administrative units")
+
+    admin_type = st.selectbox(
+        "Administrative category",
+        [
+            "All",
+            "District",
+            "City",
+            "Municipality",
+            "Town Council"
+        ]
     )
 
     st.info(
-        "The registry is prepared for expansion. "
-        "Official administrative records must be imported and verified "
-        "before publishing district counts or boundary information."
+        "The registry is awaiting a verified official dataset. "
+        "No unverified district counts or administrative boundaries "
+        "are published."
     )
 
-    registry_search = st.text_input(
-        "Search administrative unit"
-    )
-
-    registry_type = st.selectbox(
-        "Administrative type",
-        ["All", "District", "City", "Municipality", "Town Council"]
-    )
-
-    st.caption(
-        "No unverified administrative entries are displayed."
-    )
+    st.write("Search term:", search if search else "None")
+    st.write("Selected category:", admin_type)
 
     st.link_button(
-        "Official statistics",
+        "Uganda Bureau of Statistics",
         SOURCES["UBOS"]
     )
 
     st.link_button(
-        "Local Government records",
+        "Ministry of Local Government",
         SOURCES["Local Government"]
     )
 
 
-# ---------------- CONSTITUTION ----------------
+# =====================================================
+# CONSTITUTION AND LAW
+# =====================================================
 
 elif page == "Constitution & Law":
 
     st.title("Constitution & Law")
 
     for title, description in CONSTITUTION:
+
         with st.expander(title):
+
             st.write(description)
 
     st.link_button(
-        "Read Ugandan laws and legal materials",
+        "Uganda Legal Information Institute",
         SOURCES["Legal Information Institute"]
     )
 
     st.warning(
-        "Educational information only. Consult current legislation "
-        "and qualified legal professionals for legal decisions."
+        "This is an educational reference, not legal advice."
     )
 
 
-# ---------------- ELECTIONS ----------------
+# =====================================================
+# ELECTIONS
+# =====================================================
 
 elif page == "Elections":
 
@@ -476,13 +682,15 @@ elif page == "Elections":
 
     st.markdown("""
     ### Electoral Commission
+
     - Electoral administration
     - Voter registration
-    - Election programmes
+    - Electoral programmes
     - Election results
     - Electoral laws
 
     ### Parliamentary representation
+
     - Members of Parliament
     - Constituencies
     - Parliamentary committees
@@ -500,80 +708,122 @@ elif page == "Elections":
     )
 
 
-# ---------------- ACCOUNTABILITY ----------------
+# =====================================================
+# ACCOUNTABILITY
+# =====================================================
 
 elif page == "Accountability":
 
-    st.title("Accountability Institutions")
+    st.title("Accountability & Oversight")
 
     institutions = [
-        ("Inspectorate of Government", "Investigates corruption and maladministration."),
-        ("Auditor General", "Audits public expenditure and accounts."),
-        ("Parliament", "Exercises legislative and oversight responsibilities."),
-        ("PPDA", "Oversees public procurement.")
+        (
+            "Inspectorate of Government",
+            "Investigates corruption and maladministration.",
+            "Inspectorate of Government"
+        ),
+        (
+            "Auditor General",
+            "Audits public accounts and expenditure.",
+            "Auditor General"
+        ),
+        (
+            "Parliament",
+            "Exercises legislative and oversight functions.",
+            "Parliament"
+        ),
+        (
+            "Public Procurement Authority",
+            "Oversees public procurement.",
+            "PPDA"
+        )
     ]
 
-    for name, description in institutions:
+    for name, description, source in institutions:
+
         with st.container(border=True):
+
             st.subheader(name)
             st.write(description)
 
-    st.link_button(
-        "Inspectorate of Government",
-        SOURCES["Inspectorate of Government"]
-    )
-
-    st.link_button(
-        "Office of the Auditor General",
-        SOURCES["Auditor General"]
-    )
+            st.link_button(
+                "Official website",
+                SOURCES[source]
+            )
 
 
-# ---------------- RESOURCES ----------------
+# =====================================================
+# OFFICIAL RESOURCES
+# =====================================================
 
 elif page == "Official Resources":
 
     st.title("Official Government Resources")
 
-    search = st.text_input("Search official websites")
+    search = st.text_input("Search government websites")
 
-    for name, url in SOURCES.items():
-        if search.lower() in name.lower():
-            with st.container(border=True):
-                st.write(f"**{name}**")
-                st.link_button("Open website", url)
+    filtered = {
+        name: url
+        for name, url in SOURCES.items()
+        if search.lower() in name.lower()
+    }
+
+    for name, url in filtered.items():
+
+        with st.container(border=True):
+
+            st.subheader(name)
+
+            st.link_button(
+                "Open official website",
+                url
+            )
 
 
-# ---------------- ABOUT ----------------
+# =====================================================
+# ABOUT
+# =====================================================
 
 elif page == "About":
 
     st.title("About Uganda Governance Guide")
 
-    st.write("""
+    st.markdown("""
     Uganda Governance Guide is an independent public-information
-    platform designed to make government structures and public
-    institutions easier to understand.
+    platform designed to improve access to information about
+    Uganda's governance system.
 
-    Its objectives include:
+    ### Objectives
 
-    - Improving access to public information.
-    - Explaining government structures.
-    - Organising administrative information.
-    - Connecting citizens to official resources.
-    - Supporting civic and constitutional education.
+    - Explain government structures.
+    - Organise public institution information.
+    - Provide administrative registry resources.
+    - Improve access to official government websites.
+    - Support civic and constitutional education.
+
+    ### Editorial principles
+
+    - Prioritise official government sources.
+    - Verify changing information.
+    - Avoid publishing unverified figures.
+    - Clearly identify information that needs confirmation.
+    - Keep legal information linked to authoritative sources.
     """)
 
-    st.write(f"Application date: {date.today()}")
+    st.write("Application version: 2.0")
+    st.write("Date:", date.today())
 
-    st.caption("Version 1.0")
 
-
-# ---------------- FOOTER ----------------
+# =====================================================
+# FOOTER
+# =====================================================
 
 st.divider()
 
-st.caption(
-    "UGANDA GOVERNANCE GUIDE | Independent educational resource | "
-    "Verify current information through official institutions."
-)
+st.markdown("""
+<div class="footer">
+    UGANDA GOVERNANCE GUIDE<br>
+    Independent Public Information Portal<br>
+    Verify current information through official institutions.
+</div>
+""", unsafe_allow_html=True)
